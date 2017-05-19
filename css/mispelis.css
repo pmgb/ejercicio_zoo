@@ -1,6 +1,7 @@
 ﻿
 #resultados {
     border: solid 0px red;
+    width: 75%;
     margin: 0 auto;
     padding: 10px 10px 10px 10px;
 }
@@ -9,11 +10,13 @@
     border: solid 0px green;
     float: left;
     margin-left: 8px;
+    display: none;
 }
 
 img {
     width: 175px;
     height: 225px;
+    /*display: none;*/
 }
 
 .contenido-pelicula {
@@ -57,4 +60,36 @@ img {
     border: solid 0px red;
     padding-left: 3px;
     padding-top: 3px;
+}
+
+.puntero {
+    cursor: pointer;
+}
+
+.oculto {
+    display: none;
+}
+
+#paginador {
+    width: 75%;
+    margin: 0 auto;
+    padding: 10px 10px 10px 10px;
+}
+
+#camino-hormigas {
+    border: solid 0px black;
+    float: left;
+    margin-left: 10px;
+}
+
+#flecha-izda {
+    border: solid 0px red;
+    float: left;
+    margin-left: 10px;
+}
+
+#flecha-dcha {
+    border: solid 0px blue;
+    float: left;
+    margin-left: 10px;
 }
