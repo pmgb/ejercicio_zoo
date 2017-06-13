@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
 
-    function GetMarcas() {
+    function GetClasificaciones() {
 
         var urlAPI = 'http://localhost:52673/api/animal';
 
@@ -49,7 +49,7 @@
             url: urlAPI + '/' + idMarca,
             type: "DELETE",
             success: function (respuesta) {
-                GetMarcas();
+                GetClasificaciones();
             },
             error: function (respuesta) {
                 console.log(respuesta);
@@ -70,7 +70,7 @@
             dataType: 'json',
             data: dataNuevaMarca,
             success: function (respuesta) {
-                GetMarcas();
+                GetClasificaciones();
             },
             error: function (respuesta) {
                 console.log(respuesta);
@@ -105,6 +105,6 @@
         });
     });
 
-    GetMarcas();
+    GetClasificaciones();
 
 });

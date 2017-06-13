@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -7,9 +9,11 @@ using System.Web.Http;
 
 namespace ApiZoo
 {
+    //Hoy 13-6-17 19:00
     public static class Db
     {
         private static SqlConnection conexion = null;
+        private static string esMascota;
 
         public static void Conectar()
         {
@@ -17,7 +21,7 @@ namespace ApiZoo
             {
                 // PREPARO LA CADENA DE CONEXIÓN A LA BD
                 string cadenaConexion = @"Server=.\sqlexpress;
-                                          Database=zoo_pm;
+                                          Database=Zoo_pm;
                                           User Id=PMGB;
                                           Password=pinturita23;";
 
@@ -28,13 +32,13 @@ namespace ApiZoo
                 // TRATO DE ABRIR LA CONEXION
                 conexion.Open();
 
-                //// PREGUNTO POR EL ESTADO DE LA CONEXIÓN
-                //if (conexion.State == ConnectionState.Open)
-                //{
-                //    Console.WriteLine("Conexión abierta con éxito");
-                //    // CIERRO LA CONEXIÓN
-                //    conexion.Close();
-                //}
+                // PREGUNTO POR EL ESTADO DE LA CONEXIÓN
+                if (conexion.State == ConnectionState.Open)
+                {
+                    Console.WriteLine("Conexión abierta con éxito");
+                // CIERRO LA CONEXIÓN
+                    conexion.Close();
+                }
             }
             catch (Exception)
             {
@@ -50,7 +54,7 @@ namespace ApiZoo
             }
             finally
             {
-                // DESTRUYO LA CONEXIÓN
+                ////DESTRUYO LA CONEXIÓN
                 //if (conexion != null)
                 //{
                 //    if (conexion.State != ConnectionState.Closed)
@@ -80,69 +84,90 @@ namespace ApiZoo
             }
         }
 
-        public static List<Especies> DameLosUsuarios()
+              
+        public static List<Clasificaciones> GetClasificaciones()
         {
-            //Usuario[]     usuarios = null;
-            List<Especies> usuarios = null;
-            // PREPARO LA CONSULTA SQL PARA OBTENER LOS USUARIOS
-            string consultaSQL = "SELECT * FROM Especies;";
-            // PREPARO UN COMANDO PARA EJECUTAR A LA BASE DE DATOS
-            SqlCommand comando = new SqlCommand(consultaSQL, conexion);
-            // RECOJO LOS DATOS
+            List<Clasificaciones> resultado = new List<Clasificaciones>();
+            //Hecho
+            // PREPARO EL PROCEDIMIENTO A EJECUTAR
+            string procedimiento = "dbo.GetClasificaciones";
+            // PREPARO EL COMANDO PARA LA BD
+            SqlCommand comando = new SqlCommand(procedimiento, conexion);
+            // INDICO QUE LO QUE VOY A EJECUTAR ES UN PA
+            comando.CommandType = CommandType.StoredProcedure;
+            // EJECUTO EL COMANDO
             SqlDataReader reader = comando.ExecuteReader();
-            usuarios = new List<Especies>();
+            // PROCESO EL RESULTADO Y LO MENTO EN LA VARIABLE
+            while (reader.Read())
+            {
+                Clasificaciones clasificacion = new Clasificaciones();
+
+                clasificacion.IdClasificacion = (int)reader["IdClasificacion"];
+                clasificacion.denominacion = reader["denominacion"].ToString();
+                // añadiro a la lista que voy
+                // a devolver
+                resultado.Add(clasificacion);
+            }
+
+            return resultado;
+        }
+
+        public static List<Especies> GetEspecies()
+    {
+        List<Especies> resultado = new List<Especies>();
+
+        // PREPARO EL PROCEDIMIENTO A EJECUTAR
+        string procedimiento = "dbo.GetEspecies";
+        // PREPARO EL COMANDO PARA LA BD
+        SqlCommand comando = new SqlCommand(procedimiento, conexion);
+        // INDICO QUE LO QUE VOY A EJECUTAR ES UN PA
+        comando.CommandType = CommandType.StoredProcedure;
+        // EJECUTO EL COMANDO
+        SqlDataReader reader = comando.ExecuteReader();
+        // PROCESO EL RESULTADO Y LO MENTO EN LA VARIABLE
+        while (reader.Read())
+            {
+            Especies especie = new Especies();
+
+                //especies.IdClasificacion = (int)reader["IdClasificacion"];
+                //clasificacion.denominacion = reader["denominacion"].ToString();
+
+                especie.idEspecie = long.Parse(reader["idEspecie"].ToString(),
+                especie.idClasificacion = int.Parse(reader["idClasificacion"].ToString(),
+                especie.idTipodeAnimal = int.Parse(reader["IdTipodeAnimal"].ToString(),
+                especie.nombre = reader["nombre"].ToString(),
+                especie.nPatas = int.Parse(reader["nPatas"].ToString(),
+                especie.esMascota = int.Parse(reader["esMascota"].ToString();
+                // añadiro a la lista que voy
+                // a devolver
+                resultado.Add(especie);
+             }
+
+        return resultado;
+    }
+
+        public static List<TiposAnimal> GetTiposAnimal()
+        {
+            List<TiposAnimal> resultados = new List<TiposAnimal>();
+            string procedimiento = "dbo.GetTiposAnimales";
+
+            SqlCommand comando = new SqlCommand(procedimiento, conexion);
+
+            SqlDataReader reader = comando.ExecuteReader();
 
             while (reader.Read())
             {
-                usuarios.Add(new Usuario()
-                {
-                    idEspecie = int.Parse(reader["idEspecie"].ToString()),
-                    idClasificacion = int.Parse(reader["idClasificacion"].ToString(),
-                    idTipodeAnimal = int.Parse(reader["idTipodeAnimal"].ToString(),
-                    nombre = reader["nombre"].ToString(),
-                    nPatas = int.Parse(reader["nPatas"].ToString(),
-                                   esMascota bit
-                    
-                    nombre = reader["nombre"].ToString(),
-                    firstName = reader["firstName"].ToString(),
-                    lastName = reader["lastName"].ToString(),
-                    photoUrl = reader["photoUrl"].ToString(),
-                    searchPreferences = reader["searchPreferences"].ToString(),
-                    status = bool.Parse(reader["status"].ToString()),
-                    deleted = (bool)reader["deleted"],
-                    isAdmin = Convert.ToBoolean(reader["isAdmin"])
-                });
+                TiposAnimal tipo = new TiposAnimal();
+                tipo.IdTipoAnimal = (int)reader["IdTiposAnimal"];
+                tipo.denominacion = reader["denominacion"].ToString();
+                resultados.Add(tipo);
             }
 
-            // DEVUELVO LOS DATOS
-            return usuarios;
+
+            return resultados;
         }
 
-        // GET api/<controller>
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<controller>/5
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<controller>
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/<controller>/5
-        public void Delete(int id)
-        {
-        }
     }
+
 }
+       

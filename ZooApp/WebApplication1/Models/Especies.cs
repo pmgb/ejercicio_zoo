@@ -15,7 +15,7 @@ namespace ApiZoo
         public int idTipodeAnimal { get; set; }
         public string nombre { get; set; }
         public int nPatas { get; set; }
-        public bool esMascota { get; set; }
+        public int esMascota { get; set; }
 
     }
 }

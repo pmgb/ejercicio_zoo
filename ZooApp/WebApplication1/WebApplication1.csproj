@@ -234,8 +234,8 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\Especies.cs" />
-    <Compile Include="Controllers\Tiposanimal.cs" />
+    <Compile Include="Models\Especies.cs" />
+    <Compile Include="Models\Tiposanimal.cs" />
     <Compile Include="Controllers\_ClasificacionesController.cs" />
     <Compile Include="Controllers\_EspeciesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -247,6 +247,7 @@
     </Compile>
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Clasificaciones.cs" />
     <Compile Include="Models\RespuestaAPI.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

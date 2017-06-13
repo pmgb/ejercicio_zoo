@@ -12,13 +12,13 @@ namespace ApiZoo.Controllers
         public RespuestaAPI Get()
         {
             RespuestaAPI resultado = new RespuestaAPI();
-            List<Especies> data = new List<Especies>();
+            List<Especies> dataTiposAnimal = new List<Especies>();
             try
             {
                 Db.Conectar();
                 if (Db.EstaLaConexionAbierta())
                 {
-                    data = Db.DameListaCochesConProcedimientoAlmacenado();
+                    dataTiposAnimal = Db.DameListaEspeciesConProcedimientoAlmacenado();
                     resultado.error = "";
                 }
                 Db.Desconectar();
@@ -27,8 +27,8 @@ namespace ApiZoo.Controllers
             {
                 resultado.error = "Error";
             }
-            resultado.totalElementos = data.Count;
-            resultado.data = data;
+            resultado.totalElementos = dataTiposAnimal.Count;
+            resultado.dataTiposAnimal = dataTiposAnimal;
             return resultado;
 
         }
@@ -43,7 +43,7 @@ namespace ApiZoo.Controllers
                 Db.Conectar();
                 if (Db.EstaLaConexionAbierta())
                 {
-                    data = Db.DameListaCochesConProcedimientoAlmacenadoPorId(id);
+                    data = Db.DameListaEspeciesConProcedimientoAlmacenadoPorId(id);
                     resultado.error = "";
                 }
                 Db.Desconectar();
