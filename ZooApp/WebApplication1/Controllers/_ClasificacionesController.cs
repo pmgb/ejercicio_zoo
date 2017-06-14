@@ -9,60 +9,117 @@ namespace ApiZoo.Controllers
 {
     public class _ClasificacionesController : ApiController
        {
-        // GET: api/TiposCombustibles
+        // GET: api/Clasificaciones
         public RespuestaAPI Get()
         {
-            RespuestaAPI respuesta = new RespuestaAPI();
-            List<TiposAnimal> data = new List<TiposAnimal>();
+            RespuestaAPI resultado = new RespuestaAPI();
+            List<Clasificaciones> listaClasificacion = new List<Clasificaciones>();
             try
             {
                 Db.Conectar();
                 if (Db.EstaLaConexionAbierta())
                 {
-                    data = Db.GetTiposAnimal();
+                    listaClasificacion = Db.GetClasificaciones();
                 }
-                respuesta.error = "";
+                resultado.error = "";
                 Db.Desconectar();
             }
             catch
             {
-                respuesta.totalElementos = 0;
-                respuesta.error = "Se produjo un error";
+                resultado.error = "Se produjo un error";
             }
 
-            respuesta.totalElementos = data.Count;
-            respuesta.dataTiposAnimal = data;
-            return respuesta;
+            resultado.totalElementos = listaClasificacion.Count;
+            resultado.dataClasificacion = listaClasificacion;
+            return resultado;
+        }
+        //Bien arriba
+
+        // GET: api/Clasificaciones/5
+        public RespuestaAPI Get(long id)
+        {
+            RespuestaAPI resultado = new RespuestaAPI();
+            List<Clasificaciones> listaClasificaciones = new List<Clasificaciones>();
+            try
+            {
+                Db.Conectar();
+
+                if (Db.EstaLaConexionAbierta())
+                {
+                    listaClasificaciones = Db.GetClasificacionesPorId(id);
+                }
+                resultado.error = "";
+                Db.Desconectar();
+            }
+            catch
+            {
+                resultado.error = "Se produjo un error";
+            }
+
+            resultado.totalElementos = listaClasificaciones.Count;
+            resultado.dataClasificacion = listaClasificaciones;
+            return resultado;
         }
 
-
-
-
-
-
-
-
-
-
-        // GET: api/TiposCombustibles/5
-        public string Get(int id)
+        // POST: api/Clasificaciones
+        [HttpPost]
+        public IHttpActionResult Post([FromBody] Clasificaciones Clasificaciones)
         {
-            return "value";
+            RespuestaAPI respuesta = new RespuestaAPI();
+            respuesta.error = "";
+            int filasAfectadas = 0;
+            try
+            {
+                Db.Conectar();
+
+                if (Db.EstaLaConexionAbierta())
+                {
+                    filasAfectadas = Db.AgregarClasificaciones(clasificaciones);
+                }
+
+                respuesta.totalElementos = filasAfectadas;
+
+                Db.Desconectar();
+            }
+            catch (Exception ex)
+            {
+                respuesta.totalElementos = 0;
+                respuesta.error = "Error al agregar la marca";
+            }
+
+            return Ok(respuesta);
         }
 
-        // POST: api/TiposCombustibles
-        public void Post([FromBody]string value)
+        // PUT: api/Clasificaciones/5
+        [HttpPut]
+        public IHttpActionResult Put(int id, [FromBody]Clasificaciones Clasificaciones)
         {
+            return Ok(Clasificaciones);
         }
 
-        // PUT: api/TiposCombustibles/5
-        public void Put(int id, [FromBody]string value)
+        // DELETE: api/Clasificaciones/5
+        [HttpDelete]
+        public IHttpActionResult Delete(int id)
         {
-        }
-
-        // DELETE: api/TiposCombustibles/5
-        public void Delete(int id)
-        {
+            RespuestaAPI respuesta = new RespuestaAPI();
+            respuesta.error = "";
+            int filasAfectadas = 0;
+            try
+            {
+                Db.Conectar();
+                if (Db.EstaLaConexionAbierta())
+                {
+                    filasAfectadas = Db.EliminarClasificaciones(id);
+                }
+                respuesta.totalElementos = filasAfectadas;
+                Db.Desconectar();
+            }
+            catch (Exception ex)
+            {
+                respuesta.totalElementos = 0;
+                respuesta.error = "Error al eliminar la marca";
+            }
+            return Ok(respuesta);
         }
     }
 }

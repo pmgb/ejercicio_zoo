@@ -10,10 +10,12 @@ using System.Web.Http;
 namespace ApiZoo
 {
     //Hoy 13-6-17 19:00
+    //Hoy 14-6-17 16:15
+    //Hoy 14-6-17 19:06
     public static class Db
     {
         private static SqlConnection conexion = null;
-        private static string esMascota;
+        //private static string esMascota;
 
         public static void Conectar()
         {
@@ -84,7 +86,69 @@ namespace ApiZoo
             }
         }
 
-              
+        public static List<Especies> DameListaEspeciesConProcedimientoAlmacenado()
+        { //Yo 14-6-17
+            // CREO EL OBJETO EN EL QUE SE DEVOLVERÁN LOS RESULTADOS
+            List<Especies> resultados = new List<Especies>();
+
+            // PREPARO LA LLAMADA AL PROCEDIMIENTO ALMACENADO
+            string procedimientoAEjecutar = "dbo.GET_ESPECIES_POR_CLASIFICACIONES";
+            //string procedimientoAEjecutar = "dbo.GET_COCHE_POR_MARCA";
+
+            //GET_ESPECIES_POR_CLASIFICACIONES
+
+            // PREPARAMOS EL COMANDO PARA EJECUTAR EL PROCEDIMIENTO ALMACENADO
+            SqlCommand comando = new SqlCommand(procedimientoAEjecutar, conexion);
+            comando.CommandType = CommandType.StoredProcedure;
+            // EJECUTO EL COMANDO
+            SqlDataReader reader = comando.ExecuteReader();
+            // RECORRO EL RESULTADO Y LO PASO A LA VARIABLE A DEVOLVER
+            while (reader.Read())
+            {
+                // CREO LA ESPECIE
+                Especie especies = new Especies();
+                Especie.idEspecie = (long)reader["idEspecie"];
+                Especie.idClasificacion = (short)reader["idClasificacion"];
+                Especie.idTipodeAnimal = (short)reader["idTipodeAnimal"];
+                Especie.nombre = reader["nombre "].ToString();
+                Especie.nPatas = (short)reader["nPatas "];
+                Especie.esMascota = (short)reader["esMascota "];
+                Especie Clasificaciones = new Clasificaciones();
+                Especie.Clasificaciones.IdClasificacion = (long)reader["IdClasificacion"];
+                Especie.Clasificaciones.denominacion = reader["denominacionClasificaciones"].ToString();
+                Especie.TiposAnimal.IdTipoAnimal = (long)reader["IdTipoAnimal"];
+                Especie.TiposAnimal.denominacion = reader["denominacionTiposAnimal"].ToString();
+                resultados.Add(especies);
+            }
+
+            return resultados;
+        }
+
+
+
+
+        //Coche coche = new Coche();
+        //coche.id = (long)reader["id"];
+        //coche.matricula = reader["matricula"].ToString();
+        //coche.color = reader["color"].ToString();
+        //coche.cilindrada = (decimal)reader["cilindrada"];
+        //coche.nPlazas = (short)reader["nPlazas"];
+        //coche.fechaMatriculacion = (DateTime)reader["fechaMatriculacion"];
+        //coche.marca = new Marca();
+        //coche.marca.id = (long)reader["idMarca"];
+        //coche.marca.denominacion = reader["denominacionMarca"].ToString();
+        //coche.tipoCombustible = new TipoCombustible();
+        //coche.tipoCombustible.id = (long)reader["idTipoCombustible"];
+        //coche.tipoCombustible.denominacion = reader["denominacionTipoCombustible"].ToString();
+        //// AÑADO EL COCHE A LA LISTA DE RESULTADOS
+        //resultados.Add(coche);
+
+    //}
+
+    //        return resultados;
+    //    }
+
+
         public static List<Clasificaciones> GetClasificaciones()
         {
             List<Clasificaciones> resultado = new List<Clasificaciones>();
@@ -132,12 +196,12 @@ namespace ApiZoo
                 //especies.IdClasificacion = (int)reader["IdClasificacion"];
                 //clasificacion.denominacion = reader["denominacion"].ToString();
 
-                especie.idEspecie = long.Parse(reader["idEspecie"].ToString(),
-                especie.idClasificacion = int.Parse(reader["idClasificacion"].ToString(),
-                especie.idTipodeAnimal = int.Parse(reader["IdTipodeAnimal"].ToString(),
-                especie.nombre = reader["nombre"].ToString(),
-                especie.nPatas = int.Parse(reader["nPatas"].ToString(),
-                especie.esMascota = int.Parse(reader["esMascota"].ToString();
+                especie.idEspecie = long.Parse(reader["idEspecie"].ToString());
+                especie.idClasificacion = int.Parse(reader["idClasificacion"].ToString());
+                especie.idTipodeAnimal = int.Parse(reader["IdTipodeAnimal"].ToString());
+                especie.nombre = reader["nombre"].ToString();
+                especie.nPatas = int.Parse(reader["nPatas"].ToString());
+                especie.esMascota = int.Parse(reader["esMascota"].ToString());
                 // añadiro a la lista que voy
                 // a devolver
                 resultado.Add(especie);
