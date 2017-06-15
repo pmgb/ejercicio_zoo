@@ -77,3 +77,52 @@ GROUP BY
 ORDER BY Clasificaciones.denominacion
 END
 
+/* PROCEDIMIENTO GET_Clasificaciones_ID*/
+
+USE [Zoo_pm]
+GO
+/****** Object:  StoredProcedure [dbo].[Get_Marcas_ID]    Script Date: 15/06/2017 17:10:26 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[Get_Clasificaciones_ID]
+      @id bigint   as
+  Begin
+    select IdClasificacion, denominacion from Clasificaciones
+    WHERE Clasificaciones.IdClasificacion = @id
+  END;
+
+  /*PROCEDIMIENTO AgregarClasificacion*/
+
+  USE [Zoo_pm]
+GO
+/****** Object:  StoredProcedure [dbo].[AgregarMarca]    Script Date: 15/06/2017 17:25:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- PROCEDIMIENTO PARA INSERTAR UNA NUEVA MARCA
+
+ALTER PROCEDURE [dbo].[AgregarClasificacion]
+	@denominacion nvarchar (50)
+AS
+BEGIN
+	INSERT INTO Clasificaciones (denominacion) VALUES (@denominacion)
+END
+
+/* PROCEDIMIENTO PARA EliminarClasificacion*/
+
+USE [Zoo_pm]
+GO
+/****** Object:  StoredProcedure [dbo].[EliminarMarca]    Script Date: 15/06/2017 17:33:10 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[EliminarClasificacion]
+	@id bigint
+AS
+BEGIN
+	DELETE FROM Clasificaciones WHERE IdClasificacion = @id
+END

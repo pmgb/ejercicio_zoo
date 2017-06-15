@@ -9,24 +9,17 @@ namespace ApiZoo.Controllers
 {
     public class _EspeciesController : ApiController
        {
-        // GET: api/Especies
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
-        //public IEnumerable<Coche> Get()
         public RespuestaAPI Get()
         {
             RespuestaAPI resultado = new RespuestaAPI();
-            List<Especies> dataEspecies = new List<Especies>();
+            List<Especies> data = new List<Especies>();
             try
             {
                 Db.Conectar();
                 if (Db.EstaLaConexionAbierta())
                 {
-                    dataEspecies = Db.GetEspecies();
-                    //data = Db.DameListaEspeciesConProcedimientoAlmacenado();
+                    //data = Db.GetEspecies();
+                    data = Db.DameListaEspeciesConProcedimientoAlmacenado();
                     resultado.error = "";
                 }
                 Db.Desconectar();
@@ -35,8 +28,8 @@ namespace ApiZoo.Controllers
             {
                 resultado.error = "Error";
             }
-            resultado.totalElementos = dataEspecies.Count;
-            resultado.dataEspecies = dataEspecies;
+            resultado.totalElementos = data.Count;
+            resultado.dataEspecies = data;
             return resultado;
 
             //resultado.totalElementos = data.Count;
@@ -83,7 +76,7 @@ namespace ApiZoo.Controllers
                 Db.Conectar();
                 if (Db.EstaLaConexionAbierta())
                 {
-                    data = Db.DameListaCochesConProcedimientoAlmacenadoPorId(id);
+                    data = Db.DameListaEspeciesConProcedimientoAlmacenadoPorId(id);
                     resultado.error = "";
                 }
                 Db.Desconectar();
@@ -93,7 +86,7 @@ namespace ApiZoo.Controllers
                 resultado.error = "Error";
             }
             resultado.totalElementos = data.Count;
-            resultado.data = data;
+            resultado.dataEspecies = data;
             return resultado;
 
         }

@@ -7,11 +7,13 @@ namespace ApiZoo
 {
     public class RespuestaAPI
     {
+        internal List<Clasificaciones> dataClasificacion;
+
         public int totalElementos { get; set; }
 
         public string error { get; set; }
 
-        public List<Clasificaciones> data { get; set; }
+        public List<Clasificaciones> dataClasificaciones { get; set; }
 
         public List<Especies> dataEspecies { get; set; }
 

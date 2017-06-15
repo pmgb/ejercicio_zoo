@@ -234,6 +234,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Models\ClasificacionesNEspecies.cs" />
     <Compile Include="Models\Especies.cs" />
     <Compile Include="Models\Tiposanimal.cs" />
     <Compile Include="Controllers\_ClasificacionesController.cs" />
@@ -297,9 +298,10 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Views\js\addAnimal.html" />
-    <Content Include="Views\js\Animal.html" />
-    <Content Include="Views\js\animal.js" />
+    <Content Include="Views\addClasificacion.html" />
+    <Content Include="Views\Clasificacion.html" />
+    <Content Include="Views\clasificaciones.html" />
+    <Content Include="Views\js\clasificacion.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -46,7 +46,7 @@ namespace ApiZoo.Controllers
 
                 if (Db.EstaLaConexionAbierta())
                 {
-                    listaClasificaciones = Db.GetClasificacionesPorId(id);
+                    listaClasificaciones = Db.GetClasificacionPorId(id);
                 }
                 resultado.error = "";
                 Db.Desconectar();
@@ -74,7 +74,7 @@ namespace ApiZoo.Controllers
 
                 if (Db.EstaLaConexionAbierta())
                 {
-                    filasAfectadas = Db.AgregarClasificaciones(clasificaciones);
+                    filasAfectadas = Db.AgregarClasificaciones(Clasificaciones);
                 }
 
                 respuesta.totalElementos = filasAfectadas;
@@ -109,7 +109,7 @@ namespace ApiZoo.Controllers
                 Db.Conectar();
                 if (Db.EstaLaConexionAbierta())
                 {
-                    filasAfectadas = Db.EliminarClasificaciones(id);
+                    filasAfectadas = Db.EliminarClasificacion(id);
                 }
                 respuesta.totalElementos = filasAfectadas;
                 Db.Desconectar();

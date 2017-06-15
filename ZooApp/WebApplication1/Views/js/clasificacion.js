@@ -2,11 +2,11 @@
 
     function GetClasificaciones() {
 
-        var urlAPI = 'http://localhost:64276/api/animal';
+        var urlAPI = 'http://localhost:64276/api/clasificaciones';
 
         //var urlAPI = 'http://localhost:52673/api/animal';
 
-                
+
 
         $.get(urlAPI, function (respuesta, estado) {
 
@@ -48,7 +48,7 @@
 
     $('#resultados').on('click', '#btnEliminar', function () {
         var idMarca = $(this).attr('data-id');
-        var urlAPI = 'http://localhost:64276/api/animal';
+        var urlAPI = 'http://localhost:64276/api/clasificaciones';
         //var urlAPI = 'http://localhost:52673/api/animal';
         $.ajax({
             url: urlAPI + '/' + idMarca,
@@ -64,7 +64,7 @@
 
     $('#resultados').on('click', '#btnEditar', function () {
         var idMarca = $(this).attr('data-id');
-        var urlAPI = 'http://localhost:64276/api/animal';
+        var urlAPI = 'http://localhost:64276/api/clasificaciones';
         //var urlAPI = 'http://localhost:52673/api/animal';
         var dataNuevaMarca = {
             denominacion: $('#txtNuevaMarca').val()
@@ -87,7 +87,7 @@
     $('#btnAddMarca').click(function () {
         //debugger;
         var nuevaMarca = $('#txtMarcaDenominacion').val();
-        var urlAPI = 'http://localhost:64276/api/animal';
+        var urlAPI = 'http://localhost:64276/api/clasificaciones';
         //var urlAPI = 'http://localhost:52673/api/animal';
 
         var dataNuevaMarca = {
